@@ -1,0 +1,38 @@
+CREATE TABLE STUDENT ( Name VARCHAR(30) NOT NULL,
+StudentNumber INTEGER NOT NULL,
+Class CHAR NOT NULL,
+Major CHAR(4),
+PRIMARY KEY (StudentNumber) );
+
+CREATE TABLE COURSE ( CourseName VARCHAR(30) NOT NULL,
+CourseNumber CHAR(8) NOT NULL,
+CreditHours INTEGER,
+Department CHAR(4),
+PRIMARY KEY (CourseNumber),
+UNIQUE (CourseName) );
+
+CREATE TABLE PREREQUISITE ( CourseNumber CHAR(8) NOT NULL,
+PrerequisiteNumber CHAR(8) NOT NULL,
+PRIMARY KEY (CourseNumber, PrerequisiteNumber),
+FOREIGN KEY (CourseNumber) REFERENCES
+COURSE (CourseNumber),
+FOREIGN KEY (PrerequisiteNumber) REFERENCES
+COURSE (CourseNumber) );
+
+CREATE TABLE SECTION ( SectionIdentifier INTEGER NOT NULL,
+CourseNumber CHAR(8) NOT NULL,
+Semester VARCHAR(6) NOT NULL,
+Year CHAR(4) NOT NULL,
+Instructor VARCHAR(15),
+PRIMARY KEY (SectionIdentifier),
+FOREIGN KEY (CourseNumber) REFERENCES
+COURSE (CourseNumber) );
+
+CREATE TABLE GRADE_REPORT ( StudentNumber INTEGER NOT NULL,
+SectionIdentifier INTEGER NOT NULL,
+Grade CHAR,
+PRIMARY KEY (StudentNumber, SectionIdentifier),
+FOREIGN KEY (StudentNumber) REFERENCES
+STUDENT (StudentNumber),
+FOREIGN KEY (SectionIdentifier) REFERENCES
+SECTION (SectionIdentifier) );
