@@ -1,0 +1,40 @@
+Find the names of all employees who are working in the project Computerisation.
+ SELECT E.Fname, E.Minit, E.Lname
+
+ FROM EMPLOYEE E
+
+ JOIN WORKS_ON W ON E.Ssn = W.Essn
+
+ JOIN PROJECT P ON W.Pno = P.Pnumber
+
+ WHERE P.Pname = 'Computerization';
+
+For each department whose average employee salary is more than $30,000, retrieve the department name and the number of employees working for that department.
+ SELECT D.DNAME, COUNT(*)
+
+ FROM DEPARTMENT D
+
+ JOIN EMPLOYEE E ON D.DNUMBER = E.DNO
+
+ GROUP BY D.DNAME
+
+ HAVING AVG(E.SALARY) > 30000;
+
+Suppose that we want the number of male employees in each department making more than $30,000, rather than the number of all employees. Can we specify this query in SQL? Why or why not?
+ SELECT D.DNAME, COUNT(*)
+
+ FROM DEPARTMENT D, EMPLOYEE E
+
+ WHERE D.DNUMBER = E.DNO AND E.SEX='M' AND E.DNO IN (
+
+     SELECT DNO
+
+     FROM EMPLOYEE
+
+     GROUP BY DNO
+
+     HAVING AVG(SALARY) > 30000
+
+ )
+
+ GROUP BY D.DNAME;
